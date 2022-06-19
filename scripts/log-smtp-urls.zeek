@@ -12,8 +12,10 @@ export {
 		id: conn_id &log;
 		# url that was discovered.
 		host: string &log &optional;
-		# mail ID information
+		#Email addresses found in the From header.
 		mailfrom: string &log &optional;
+		# Contents of the Date header.
+		date: string &log &optional;
 		# extract the url from data
 		url: string &log &optional;
 	};
@@ -28,7 +30,6 @@ export {
 
 	global log_smtp_urls: function(c: connection, url: string);
 }
-
 
 #redef record connection += {
 #        smtp_url: Info &optional;
@@ -60,13 +61,18 @@ function log_smtp_urls(c: connection, url: string)
 	info$url = url;
 	info$host = extract_host(url);
 	info$mailfrom = c$smtp$mailfrom;
+	info$date = c$smtp$date;
 	#c$smtp_url = info;
 	#Log::write(SMTPurl::Links_LOG, c$smtp_url);
 
 	Log::write(SMTPurl::Links_LOG, info);
 	}
 
-## event mime_entity_data(c: connection, length: count, data: string) &priority=-5
+# event mime_entity_data(c: connection, length: count, data: string) &priority=-5
+# {
+# 	print fmt("%s",c);
+# }
+
 event mime_all_data(c: connection, length: count, data: string) &priority=-5
 	{
 	log_reporter(fmt("EVENT: mime_all_data VARS: c: %s", c), 20);
