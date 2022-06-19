@@ -11,7 +11,7 @@ export {
 		# Connection details.
 		id: conn_id &log;
 		# url that was discovered.
-		host: string &log &optional;
+		domain: string &log &optional;
 		#Email addresses found in the From header.
 		mailfrom: string &log &optional;
 		# Contents of the Date header.
@@ -59,7 +59,7 @@ function log_smtp_urls(c: connection, url: string)
 	info$uid = c$smtp$uid;
 	info$id = c$id;
 	info$url = url;
-	info$host = extract_host(url);
+	info$domain = extract_host(url);
 	info$mailfrom = c$smtp$mailfrom;
 	info$date = c$smtp$date;
 	#c$smtp_url = info;
