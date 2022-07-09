@@ -60,7 +60,8 @@ function log_smtp_urls(c: connection, url: string)
 	info$id = c$id;
 	info$url = url;
 	info$domain = extract_host(url);
-	info$mailfrom = c$smtp$mailfrom;
+	if ( c$smtp?$mailfrom )
+		info$mailfrom = c$smtp$mailfrom;
 	info$date = c$smtp$date;
 	#c$smtp_url = info;
 	#Log::write(SMTPurl::Links_LOG, c$smtp_url);
